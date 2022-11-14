@@ -1,0 +1,26 @@
+use ecommerce
+
+db.createCollection('mensaje')
+db.createCollection('products')
+
+db.products.insert([{"title":"Guitarra","price":1000,"thumbnail":"https://http2.mlstatic.com/D_NQ_NP_950354-MLA50448314181_062022-W.jpg","id":1},{"title":"Guitarra electrica","price":2000,"thumbnail":"https://http2.mlstatic.com/D_NQ_NP_950354-MLA50448314181_062022-W.jpg","id":2},{"title":"Bajo","price":3000,"thumbnail":"https://http2.mlstatic.com/D_NQ_NP_950354-MLA50448314181_062022-W.jpg","id":3},{"title":"bateria","price":5000,"thumbnail":"https://http2.mlstatic.com/D_NQ_NP_950354-MLA50448314181_062022-W.jpg","id":4}])
+db.mensaje.insert([{"message":"Hola","sendAt":"14/11/2022 13:45:30 hs"},{"message":"Como estas?","sendAt":"14/11/2022 13:46:12 hs"},{"message":"Bien, vos?","sendAt":"14/11/2022 13:48:15 hs"}])
+
+db.products.find()
+db.mensaje.find()
+
+db.mensaje.estimatedDocumentCount()
+db.products.estimatedDocumentCount()
+
+db.products.insertOne({"title":"Pua guitarra","price":100,"thumbnail":"https://http2.mlstatic.com/D_NQ_NP_950354-MLA50448314181_062022-W.jpg"})
+
+db.products.find({"price":{$lt: 1000}})
+db.products.find({$and:[{"price": {$gt:1000}},{"price": {$lt:3000}}]})
+db.products.find({"price": {$gt:3000}})
+db.products.find().skip(2).limit(1).sort({"price":1})
+db.products.updateMany({},{$set: {"stock":100}},false, true)
+db.products.updateMany({"price":{$gt:4000}},{$set: {"stock":0}})
+db.products.deleteMany({"price": {$lt: 1000}})
+
+use admin
+db.createUser({"user":"pepe","pwd":"asd456","roles":[{role:"read", db:"ecommerce"}]})
